@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>dental_tool_control</name>
+  <version>0.1.0</version>
+  <description>End-effector tool switching interface.</description>
+  <!-- Replace the maintainer contact and licence after team agreement. -->
+  <maintainer email="z5415892@ad.unsw.edu.au">MTRN4231 Project Team</maintainer>
+  <license>TODO</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>rclcpp</depend>
+  <depend>rclcpp_action</depend>
+  <depend>dental_interfaces</depend>
+  <depend>std_msgs</depend>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
