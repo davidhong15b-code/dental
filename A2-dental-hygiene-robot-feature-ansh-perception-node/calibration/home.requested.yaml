@@ -1,0 +1,15 @@
+# REQUESTED TCP pose copied from the UR pendant/user; NOT a joint configuration.
+# Source XYZ assumed millimetres; native UR p[] XYZ are metres, rotation-vector radians.
+# This file uses the pendant Base feature, which ROS calls `base`, NOT `base_link`.
+# `base` is rotated 180 degrees about Z relative to `base_link`.
+# Confirm pendant feature = Base before use.
+# Recording this file never authorizes physical motion.
+frame: base
+representation: ur_tcp_pose_m_rotation_vector_rad
+position_m: [-0.58853, -0.13330, 0.22700]
+rotation_vector_rad: [2.221, 2.221, 0.0]
+pose_source: operator_supplied_not_independently_verified
+active_tcp_name_at_capture: null
+verified_against_pendant: false
+joint_configuration_captured: false
+approved_for_automatic_home_motion: false

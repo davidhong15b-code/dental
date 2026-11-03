@@ -1,0 +1,22 @@
+# SIMULATION ONLY. These are invented virtual scene coordinates, NEVER lab measurements.
+# apply_workcell.py rejects this without --allow-simulation.
+simulation: true
+calibrated: false
+planning_frame: base_link
+table:
+  center_xyz_m: [0.62, 0.12, -0.030]
+  size_xyz_m: [0.80, 0.70, 0.06]
+jaw:
+  collision_center_xyz_m: [0.62, 0.12, 0.045]
+  collision_size_xyz_m: [0.14, 0.10, 0.065]
+  visual_stl: ""  # Geometry in RViz visualized via tooth TF and box; only use actual STL with validated scale.
+brush:
+  center_tool0_xyz_m: [0.0, 0.0, 0.015]
+  size_xyz_m: [0.02, 0.02, 0.03]
+  # FAKE HARDWARE ONLY: the synthetic attached box overlaps the robot's
+  # wrist_3_link at its mounting interface. Permit this one mounting contact.
+  # Collisions with the table, jaw, and every other robot link stay active.
+  # Never copy this permission into real workcell configuration without CAD/
+  # physical verification of the brush mounting geometry.
+  touch_links: [tool0, flange, wrist_3_link]
+  visual_stl: ""

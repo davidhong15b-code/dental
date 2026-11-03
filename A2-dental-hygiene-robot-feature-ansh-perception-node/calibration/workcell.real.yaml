@@ -1,0 +1,31 @@
+# All unmeasured dimensions remain null and therefore real execution is blocked.
+calibrated: false
+planning_frame: base_link
+table:
+  center_xyz_m: null
+  size_xyz_m: null
+jaw:
+  collision_center_xyz_m: null
+  collision_size_xyz_m: null
+  # STL overlays are *visual only*. Paths absolute or relative to repo root
+  # when this file is under calibration/ (prefer absolute if in doubt).
+  visual_stl: docs/Jaw_model.stl
+  visual_position_xyz_m: null
+  visual_quaternion_xyzw: null
+  visual_scale: null
+brush:
+  center_tool0_xyz_m: null
+  size_xyz_m: null
+  touch_links: [tool0, flange]  # Verify actual mounting, never allow forearm
+  visual_stl: docs/EE_4_Brush_tool.stl
+  visual_position_tool0_xyz_m: null
+  visual_quaternion_xyzw: null
+  visual_scale: null
+# Optional UR10e course-reference collision boxes from MoveIt Tips & Tricks.
+# These are *not* necessarily correct for the UR5e: all DISABLED by default.
+# Convert from example world to real ROS base_link by MEASUREMENT before enabling.
+collision_planes:
+  - {id: lab_back_wall, enabled: false, center_xyz_m: [0.70, -0.60, 0.50], size_xyz_m: [2.40, 0.04, 3.00]}
+  - {id: lab_side_wall, enabled: false, center_xyz_m: [-0.55, 0.25, 0.80], size_xyz_m: [0.04, 2.40, 3.00]}
+  - {id: lab_reference_table, enabled: false, center_xyz_m: [0.85, 0.25, 0.05], size_xyz_m: [3.0, 3.0, 0.01]}
+  - {id: lab_ceiling, enabled: false, center_xyz_m: [0.85, 0.25, 1.50], size_xyz_m: [2.40, 2.40, 0.04]}

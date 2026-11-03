@@ -1,0 +1,22 @@
+# Physical workcell commissioning file. DO NOT use until every null is measured.
+# Only change calibrated to true after measuring and verifying the relevant geometry.
+# Config geometry in metres; STL mesh models in docs/ are in millimetres.
+calibrated: false
+planning_frame: base_link
+table:
+  center_xyz_m: null
+  size_xyz_m: null
+jaw:
+  collision_center_xyz_m: null
+  collision_size_xyz_m: null
+  visual_stl: null  # set ABSOLUTE path to repository/docs/Jaw_model.stl after calibration
+  visual_position_xyz_m: null
+  visual_quaternion_xyzw: null
+  visual_scale: null  # expected near 0.001 for mm-authored STL: VERIFY
+brush:
+  center_tool0_xyz_m: null
+  size_xyz_m: null
+  visual_stl: null  # set ABSOLUTE path to repository/docs/EE_4_Brush_tool.stl after calibration
+  visual_position_tool0_xyz_m: null
+  visual_quaternion_xyzw: null
+  visual_scale: null  # expected near 0.001, verify mesh origin and active TCP

@@ -1,0 +1,15 @@
+# REF ONLY -- DuploBot MTRN4231 26 Oct 2026 REFERENCE.md
+# NOT a robot-specific calibration. NEVER publish on a real UR5e.
+# C2 changes every session / station!
+source: https://github.com/phantom16361/ur5e-camera-calib/blob/main/reference/REFERENCE.md
+overhead_intrinsics_1920x1080: [1388.8,1382.2,919.3,574.4]
+overhead_distortion: [-0.0033,-0.0237,-0.0005,-0.0070,0.0]
+reference_base_to_overhead_xyz_m: [1.26842,0.06553,0.85374]
+reference_base_to_overhead_quat_xyzw: [0.660371,0.680313,-0.223169,-0.226450]
+reference_tool0_to_camera_link_xyz_m: [-0.01615,-0.09938,0.02493]
+reference_tool0_to_camera_link_quat_xyzw: [-0.499904,0.502214,-0.500659,-0.497209]
+reference_tool0_to_color_optical_xyz_m: [-0.03113,-0.09924,0.02460]
+reference_tool0_to_color_optical_quat_xyzw: [-0.002221,-0.002155,-0.003637,0.999989]
+marker_black_square_m: 0.060
+marker_outer_card_m: 0.080
+aruco_dictionary: DICT_ARUCO_ORIGINAL

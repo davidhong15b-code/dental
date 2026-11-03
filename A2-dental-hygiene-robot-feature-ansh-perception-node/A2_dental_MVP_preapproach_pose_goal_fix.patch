@@ -1,0 +1,30 @@
+--- a/src/dental_motion/src/motion_node.cpp
++++ b/src/dental_motion/src/motion_node.cpp
+@@ -501,6 +501,27 @@
+             finishIncomplete(handle, "Invalid pre-approach joint target for retract");
+             return;
+           }
++        } else if (i == 0 && robot_mode_ == "fake" && confirm_fake_hardware_) {
++          // FAKE HARDWARE ONLY: the first local IK result can place the
++          // upper arm through the simulated table. A joint-value goal fixes
++          // MoveIt to that one configuration, even when another collision-free
++          // IK solution may reach exactly the same tool pose.
++          //
++          // A pose goal lets MoveIt sample and collision-check alternative
++          // solutions. The trajectory is STILL subject to the per-joint,
++          // total-joint-travel and time limits below, BEFORE execution.
++          // Leave the measured real-robot goal and conservative local IK
++          // behaviour unchanged.
++          RCLCPP_INFO(get_logger(),
++              "FAKE PREAPPROACH: collision-aware pose-goal sampling at "
++              "[%.3f, %.3f, %.3f] m in %s (table/jaw/attached-brush "
++              "collision checks remain enabled)",
++              poses[i].pose.position.x, poses[i].pose.position.y,
++              poses[i].pose.position.z, base_frame_.c_str());
++          if (!group->setPoseTarget(poses[i].pose, pose_link_)) {
++            finishIncomplete(handle, "Unable to set fake PREAPPROACH pose goal");
++            return;
++          }
+         } else {
+           // RobotState::setFromIK() expects a pose in the MODEL frame, not
+           // base_link. Transform with the FK of the same predicted state.

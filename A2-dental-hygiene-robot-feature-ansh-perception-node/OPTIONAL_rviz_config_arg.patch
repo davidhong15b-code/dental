@@ -1,0 +1,63 @@
+--- a/scripts/launch/fake_ur_moveit.launch.py
++++ b/scripts/launch/fake_ur_moveit.launch.py
+@@ -256,9 +256,7 @@
+     )
+ 
+     # rviz with moveit configuration
+-    rviz_config_file = PathJoinSubstitution(
+-        [FindPackageShare(moveit_config_package), "rviz", "view_robot.rviz"]
+-    )
++    rviz_config_file = LaunchConfiguration("rviz_config_file")
+     rviz_node = Node(
+         package="rviz2",
+         condition=IfCondition(launch_rviz),
+@@ -500,6 +498,11 @@
+         DeclareLaunchArgument("launch_rviz", default_value="true", description="Launch RViz?")
+     )
+     declared_arguments.append(
++        DeclareLaunchArgument("rviz_config_file",
++            default_value=PathJoinSubstitution([FindPackageShare("ur_moveit_config"), "rviz", "view_robot.rviz"]),
++            description="Full path to an RViz config, e.g. dental dual-camera view")
++    )
++    declared_arguments.append(
+         DeclareLaunchArgument("launch_servo", default_value="true", description="Launch Servo?")
+     )
+     declared_arguments.append(
+--- a/scripts/launch/mvp_fake.launch.py
++++ b/scripts/launch/mvp_fake.launch.py
+@@ -48,6 +48,7 @@
+         launch_arguments={
+             'ur_type': 'ur5e',
+             'launch_rviz': LaunchConfiguration('launch_rviz'),
++            'rviz_config_file': LaunchConfiguration('rviz_config_file'),
+             'launch_servo': 'false',
+             'launch_motion_smoke_test': 'false',
+             'launch_dental_motion': 'true',
+@@ -93,6 +94,8 @@
+     return LaunchDescription([
+         DeclareLaunchArgument('start_fake_driver', default_value='true'),
+         DeclareLaunchArgument('launch_rviz', default_value='true'),
++        DeclareLaunchArgument('rviz_config_file', default_value=PathJoinSubstitution([
++            FindPackageShare('ur_moveit_config'), 'rviz', 'view_robot.rviz'])),
+         DeclareLaunchArgument('execute_fake_motion', default_value='false'),
+         DeclareLaunchArgument('confirm_fake_hardware', default_value='false'),
+         DeclareLaunchArgument('motion_velocity_scaling', default_value='0.15'),
+--- a/scripts/launch/mvp_real.launch.py
++++ b/scripts/launch/mvp_real.launch.py
+@@ -46,6 +46,7 @@
+         PythonLaunchDescriptionSource(os.path.join(here,'fake_ur_moveit.launch.py')),
+         launch_arguments={
+             'ur_type':'ur5e','robot_mode':'real','launch_rviz':'true',
++            'rviz_config_file':LaunchConfiguration('rviz_config_file'),
+             'launch_servo':'false','launch_motion_smoke_test':'false',
+             'launch_dental_motion':'true','launch_station_motion':'true',
+             'enable_mvp_hover_strokes':'true',
+@@ -61,6 +62,8 @@
+         }.items())
+     return LaunchDescription([
+         DeclareLaunchArgument('execute_real_motion',default_value='false'),
++        DeclareLaunchArgument('rviz_config_file',default_value=PathJoinSubstitution([
++            FindPackageShare('ur_moveit_config'),'rviz','view_robot.rviz'])),
+         DeclareLaunchArgument('publish_verified_reference_wrist_tf',default_value='false',
+             description='ONLY after measuring this exact physical wrist mount. Never during calibration.'),
+         DeclareLaunchArgument('confirm_real_calibration',default_value='false'),

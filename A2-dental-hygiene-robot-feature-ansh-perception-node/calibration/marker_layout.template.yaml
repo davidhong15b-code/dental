@@ -1,0 +1,8 @@
+# FILL IN BEFORE DEMO, physically measure ALL values.
+# Parent is dental_model CAD origin: 140 x 100 mm base, four teeth along CAD X.
+# Marker IDs 0,1,2,3: centre xyz (metres, CAD reference), NOT image pixels.
+# Measure ArUco plane z relative to CAD bottom and each marker's decoded +X yaw.
+physically_measured: false
+marker_size_m: 0.060  # KNOWN: ArUco black square, not 0.080m outer card
+marker_centres_xyz_m: null  # 12 numbers: x0,y0,z0,...x3,y3,z3
+marker_yaw_rad: null         # 4 numbers; use cyan +X arrow on preview

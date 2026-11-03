@@ -1,0 +1,86 @@
+# MTRN4231 dental_perception standard configuration
+# Modes can be chosen INDEPENDENTLY for each camera: image | camera
+# Default "image" runs immediately with the four bundled sample images, even without cameras.
+# camera = C++ connects straight to USB; no external image-publisher ROS node.
+# Only change the measurements marked LAB MEASUREMENT when physically in the lab.
+# Do not set *_calibrated true until its corresponding values have been measured.
+# Offline photographs never drive the robot by default.
+
+model_localizer:
+  ros__parameters:
+    overhead_input_mode: image           # CHANGE TO camera when USB overhead camera is connected
+    overhead_images: [samples/overhead_01.png, samples/overhead_02.png]
+    overhead_image_interval_sec: 1.0
+    publish_offline_model_pose: false    # SAFETY: leave false for sample-image preview
+
+    overhead_device: /dev/dental_overhead # udev symlink, configured once with scripts/cameras/setup_overhead_udev.sh
+    overhead_optical_frame: overhead_color_optical_frame
+    overhead_width: 640                  # LAB MEASUREMENT: selected calibrated camera resolution
+    overhead_height: 480
+    overhead_fps: 15
+    overhead_intrinsics_calibrated: false # LAB MEASUREMENT: set true ONLY after checkerboard calibration
+    overhead_camera_matrix: [0.0, 0.0, 0.0,
+                             0.0, 0.0, 0.0,
+                             0.0, 0.0, 0.0] # LAB MEASUREMENT: OpenCV fx,0,cx / 0,fy,cy / 0,0,1
+    overhead_distortion: [0.0, 0.0, 0.0, 0.0, 0.0] # LAB MEASUREMENT: distortion coefficients
+
+    robot_base_frame: base_link
+    # LAB MODEL TF: camera publishes overhead_optical_frame -> dental_model
+    # even with the UR5e switched OFF (no fake base transform).
+    # Change to base ONLY after a calibrated base -> overhead camera TF exists.
+    model_pose_reference: camera          # camera | base
+    model_frame: dental_model
+    marker_layout_calibrated: false       # LAB MEASUREMENT: true AFTER ALL next values are measured
+    aruco_dictionary: 16                  # CONFIRMED FROM PROVIDED PHOTOS: DICT_ARUCO_ORIGINAL
+    marker_size_m: 0.0                    # LAB MEASUREMENT: actual black fiducial square side in metres
+    # Marker IDs 0,1,2,3: [x0,y0,z0, x1,y1,z1, x2,y2,z2, x3,y3,z3]
+    # LAB MEASUREMENT: centres relative to CAD jaw origin (not to image pixels), in metres.
+    marker_centres_xyz_m: [0.0, 0.0, 0.0,
+                           0.0, 0.0, 0.0,
+                           0.0, 0.0, 0.0,
+                           0.0, 0.0, 0.0]
+    marker_yaw_rad: [0.0, 0.0, 0.0, 0.0] # LAB MEASUREMENT: orientation of each printed marker relative to CAD X/Y
+    max_reprojection_error_px: 2.5
+
+perception:
+  ros__parameters:
+    rgbd_input_mode: image              # CHANGE TO camera for RealSense USB depth camera
+    rgbd_images: [samples/wrist_01.png, samples/wrist_02.png]
+    # Leave empty for RGB-only sample images: stain PREVIEW works, 3D action FAILS SAFELY.
+    # To test metric 3D offline supply registered depth images in identical order.
+    # ROS 2 HUMBLE: omit this setting entirely when using RGB-only images.
+    # Empty YAML arrays ([]) may be parsed as an unset parameter.
+    # To enable registered depth, supply one file per RGB image, e.g.:
+    # rgbd_depth_images: [samples/wrist_depth_01.png, samples/wrist_depth_02.png]
+    rgbd_image_interval_sec: 1.0
+    allow_offline_findings: false        # SAFETY: never enable for real robot from saved photographs
+    rgbd_image_intrinsics_calibrated: false
+    rgbd_image_camera_matrix: [0.0, 0.0, 0.0,
+                               0.0, 0.0, 0.0,
+                               0.0, 0.0, 0.0] # LAB MEASUREMENT if using offline depth
+    rgbd_image_distortion: [0.0, 0.0, 0.0, 0.0, 0.0]
+
+    rgbd_serial: ""                       # LAB MEASUREMENT: RealSense serial; blank if exactly 1 camera
+    rgbd_optical_frame: rgbd_color_optical_frame
+    rgbd_color_width: 640
+    rgbd_color_height: 480
+    rgbd_depth_width: 640
+    rgbd_depth_height: 480
+    rgbd_fps: 15
+    model_frame: dental_model
+    # LAB CALIBRATION REQUIRED: external TF overhead_optical_frame -> base_link;
+    # and tool0 -> rgbd_color_optical_frame (hand-eye calibration).
+
+    rgb_depth_tolerance_sec: 0.06
+    acquisition_timeout_sec: 5.0
+    model_pose_max_age_sec: 2.0
+    tooth_half_width_m: 0.005            # VERIFY printed STL tooth dimensions
+    tooth_half_length_m: 0.005
+    dark_threshold: 105                  # TEST/ADJUST for live lighting
+    min_blob_area_pixels: 12
+    preview_dark_threshold: 95           # 2D-only sample diagnostic threshold
+    preview_min_blob_area: 30
+    min_surface_valid_fraction: 0.30
+    min_depth_m: 0.10
+    max_depth_m: 2.0
+    max_surface_error_m: 0.012

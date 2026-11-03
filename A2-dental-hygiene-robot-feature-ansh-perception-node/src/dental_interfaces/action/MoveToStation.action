@@ -1,0 +1,8 @@
+# Inspect is a model-relative camera pose. Home returns to the captured starting joint state.
+# No joint or TCP positions are invented by this interface.
+string station   # inspect | home
+---
+bool success
+string message
+---
+string phase

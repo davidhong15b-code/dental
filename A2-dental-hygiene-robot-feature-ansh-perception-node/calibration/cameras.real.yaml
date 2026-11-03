@@ -1,0 +1,14 @@
+# Parent frames are optical camera extrinsics in ROS base/tool frames (metres + XYZW).
+# Fill using actual overhead camera extrinsic calibration and real wrist hand-eye.
+# Do not copy the synthetic /lab reference transforms from mvp_fake.launch.py.
+calibrated: false
+overhead:
+  parent_frame: base_link
+  optical_frame: overhead_cam_optical
+  translation_xyz_m: null
+  quaternion_xyzw: null
+wrist:
+  parent_frame: tool0
+  optical_frame: rgbd_color_optical_frame
+  translation_xyz_m: null
+  quaternion_xyzw: null

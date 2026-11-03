@@ -1,0 +1,12 @@
+# This file is not an automatic IK target. It is created from measured real joints.
+# Generate using scripts/tests/commission_home_from_capture.py after moving to
+# the requested TCP pose manually on the pendant and capturing tool0_controller.
+approved_for_automatic_home_motion: false
+requested_pose_frame: base
+requested_tcp_xyz_m_rotation_vector_rad: [-0.58853, -0.13330, 0.22700, 2.221, 2.221, 0.0]
+robot_joint_names: [shoulder_pan_joint, shoulder_lift_joint, elbow_joint, wrist_1_joint, wrist_2_joint, wrist_3_joint]
+measured_joint_positions_rad: null
+verified_active_tcp: false
+verified_robot_kinematics: false
+observed_tcp_position_error_m: null
+observed_tcp_orientation_error_rad: null
