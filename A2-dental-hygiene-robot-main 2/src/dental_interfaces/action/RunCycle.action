@@ -1,9 +1,0 @@
-# Top-level supervised inspect -> select -> treat -> reinspect cycle.
-string region_id
----
-bool success
-uint32 treated_count
-string message
----
-string phase
-uint32 treated_count

@@ -1,8 +1,0 @@
-# Tool ID must refer to a physical/defined tool calibrated for the UR5e.
-DentalTarget target
-string tool_id
----
-bool success
-string message
----
-string phase

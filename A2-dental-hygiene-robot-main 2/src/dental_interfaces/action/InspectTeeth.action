@@ -1,9 +1,0 @@
-# Request an inspection; empty region_id requests the whole visible model.
-string region_id
----
-# No result may claim success before actual sensor data is inspected.
-bool success
-string message
-DentalFindingArray findings
----
-string phase
